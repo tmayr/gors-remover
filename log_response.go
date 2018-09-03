@@ -7,6 +7,7 @@ import (
 )
 
 // FormatRequest generates ascii representation of a request
+// Credits to https://medium.com/doing-things-right/pretty-printing-http-requests-in-golang-a918d5aaa000
 func FormatRequest(r *http.Request) string {
 	// Create return string
 	var request []string
