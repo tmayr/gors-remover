@@ -13,6 +13,6 @@ curl https://localhost:8080/?url=https://google.cl
 
 ## todo
 
-[] reorganize app
-[] dynamic port
-[] https (lego)
+- reorganize app
+- dynamic port
+- https (lego)
