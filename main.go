@@ -23,7 +23,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	// accept ALL THE THINGS
 	w.Header().Set("Content-Type", r.Header.Get("content-type"))
-	w.Header().Set("Access-Control-Allow-Origin", w.Header().Get("Origin"))
+	w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("origin"))
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	// might be a good idea to use * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
