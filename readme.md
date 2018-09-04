@@ -1,4 +1,4 @@
-# cors-remover-go
+# gors-remover
 
 Simple reverse proxy to bypass any CORS blockage while developing
 
@@ -16,3 +16,6 @@ curl https://localhost:8080/?url=https://google.cl
 - reorganize app
 - dynamic port
 - https (lego)
+
+## credits
+[mtavano](http://github.com/mtavano) for the idiomatic name
