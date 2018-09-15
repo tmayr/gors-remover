@@ -13,9 +13,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
+
+	defer res.Body.Close()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
