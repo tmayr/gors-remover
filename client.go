@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	"fmt"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 	"net/url"
 )
@@ -22,7 +22,7 @@ func NewForwardingHTTPClient() *ForwardingHTTPClient {
 
 // NewForwardingRequest accepts a Request object and forwards the exact headers, type and data to ?url
 func (fw *ForwardingHTTPClient) NewForwardingRequest(r *http.Request) (*http.Response, error) {
-	originalURL := r.URL.Query().Get("url")
+	originalURL := r.URL.Query().Get("url") // TODO: get query params from this request
 
 	if originalURL == "" {
 		return nil, errors.New("url query param cannot be empty")
@@ -33,7 +33,16 @@ func (fw *ForwardingHTTPClient) NewForwardingRequest(r *http.Request) (*http.Res
 		return nil, errors.New("invalid url")
 	}
 
-	req, err := http.NewRequest(r.Method, originalURL, r.Body)
+	parsedURL, err := url.Parse(originalURL)
+	if err != nil {
+		return nil, err
+	}
+
+	parsedURL.RawQuery = url.QueryEscape(parsedURL.RawQuery)
+
+	log.Println(parsedURL.String())
+
+	req, err := http.NewRequest(r.Method, parsedURL.String(), r.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +58,7 @@ func (fw *ForwardingHTTPClient) NewForwardingRequest(r *http.Request) (*http.Res
 	req.Header.Del("accept-encoding")
 
 	// print the request to the console for easier debuging
-	fmt.Println(FormatRequest(req))
+	log.Println(FormatRequest(req))
 
 	res, err := fw.client.Do(req)
 	if err != nil {
